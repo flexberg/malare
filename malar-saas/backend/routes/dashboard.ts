@@ -17,7 +17,7 @@ router.get('/customers', async (req: Request, res: Response) => {
 // Kundkort med all data
 router.get('/customers/:id', async (req: Request, res: Response) => {
   try {
-    const customer = await customerStore.getCustomerById(req.params.id)
+    const customer = await customerStore.getCustomerById(req.params.id as string)
     if (!customer) {
       res.status(404).json({ error: 'Kund hittades inte' })
       return
@@ -40,7 +40,7 @@ router.get('/customers/:id', async (req: Request, res: Response) => {
 router.patch('/customers/:id', async (req: Request, res: Response) => {
   try {
     const { name, address, notes } = req.body
-    await customerStore.updateCustomer(req.params.id, { name, address })
+    await customerStore.updateCustomer(req.params.id as string, { name, address })
     res.json({ ok: true })
   } catch (err) {
     console.error(err)
@@ -51,7 +51,7 @@ router.patch('/customers/:id', async (req: Request, res: Response) => {
 // Enskilt samtal med extraherad data
 router.get('/calls/:id', async (req: Request, res: Response) => {
   try {
-    const call = await customerStore.getCallById(req.params.id)
+    const call = await customerStore.getCallById(req.params.id as string)
     if (!call) {
       res.status(404).json({ error: 'Samtal hittades inte' })
       return
@@ -68,7 +68,7 @@ router.get('/calls/:id', async (req: Request, res: Response) => {
 // Slutför uppgift
 router.post('/tasks/:id/complete', async (req: Request, res: Response) => {
   try {
-    await customerStore.completeTask(req.params.id)
+    await customerStore.completeTask(req.params.id as string)
     res.json({ ok: true })
   } catch (err) {
     console.error(err)
